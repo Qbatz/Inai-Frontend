@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { InfoCircle } from "iconsax-react";
 
-function AddressVendor() {
+function AddressVendor(props) {
 
   const [officeAddress1, setOfficeAddress1] = useState("");
   const [city, setCity] = useState("");
@@ -59,7 +59,29 @@ function AddressVendor() {
   };
   const handleShippingLandmarkChange = (e) => setShippingLandmark(e.target.value);
   const handleShippingGoogleMapChange = (e) => setShippingGoogleMap(e.target.value);
-  const handleCheckboxChange = () => setSameAsOffice(!sameAsOffice);
+  const handleCheckboxChange = () => {
+    setSameAsOffice(!sameAsOffice)
+    if (!sameAsOffice) {
+     
+      setShippingAddress1(officeAddress1);
+      setShippingCity(city);
+      setShippingState(state);
+      setShippingCountry(country);
+      setShippingPostalCode(postalCode);
+      setShippingLandmark(landmark);
+      setShippingGoogleMap(googleMap);
+    } else {
+     
+      setShippingAddress1("");
+      setShippingCity("");
+      setShippingState("");
+      setShippingCountry("");
+      setShippingPostalCode("");
+      setShippingLandmark("");
+      setShippingGoogleMap("");
+    }
+  }
+    ;
 
   const validateForm = () => {
     let errors = {};
@@ -99,8 +121,36 @@ function AddressVendor() {
       };
       console.log("Form submitted successfully", payload);
     }
+
+    props.handleNext(3)
+
+
   };
 
+
+
+  const handleSaveClick = () => {
+    if (validateForm()) {
+      const payload = {
+        officeAddress1,
+        city,
+        state,
+        country,
+        postalCode,
+        landmark,
+        googleMap,
+        shippingAddress1,
+        shippingCity,
+        shippingState,
+        shippingCountry,
+        shippingPostalCode,
+        shippingLandmark,
+        shippingGoogleMap,
+        sameAsOffice,
+      };
+      console.log("Form submitted successfully", payload);
+    }
+  }
 
   return (
     <div>
@@ -340,17 +390,25 @@ function AddressVendor() {
         <div className="flex flex-col xs:flex-row sm:flex-row  justify-between mb-2 mt-4">
           <button
             className="px-10 py-2 bg-slate-400 rounded-lg text-white font-Montserrat  text-base font-semibold"
-
+onClick={()=>props.handleBackBasic(1)}
           >
             Back
           </button>
+          <div className='flex gap-2'>
+            <button
+              type="button"
+              className="w-full sm:w-auto px-4 py-2 border border-[#205DA8] text-[#205DA8] rounded-lg shadow-md hover:bg-[#205DA8] hover:text-white transition"
+              onClick={handleSaveClick} >
+              Save & Exit
+            </button>
+            <button
+              className="px-10 py-2 bg-blue-800 rounded-lg text-white font-Montserrat  text-base font-semibold"
+              onClick={handleNext}
+            >
+              Next
+            </button>
+          </div>
 
-          <button
-            className="px-10 py-2 bg-blue-800 rounded-lg text-white font-Montserrat  text-base font-semibold"
-            onClick={handleNext}
-          >
-            Next
-          </button>
         </div>
 
 

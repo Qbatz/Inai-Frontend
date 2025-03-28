@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { InfoCircle } from "iconsax-react";
 
-function BankVendor() {
+function BankVendor(props) {
   const [beneficiaryName, setBeneficiaryName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [bankName, setBankName] = useState("");
@@ -306,7 +306,10 @@ function BankVendor() {
         </div>
         <div className="flex flex-col xs:flex-row sm:flex-row justify-between items-center mt-4 gap-3 sm:gap-0">
 
-          <button className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-gray-400 rounded-lg text-white font-semibold">
+          <button 
+          onClick={()=>props.handleBackAddress(2)}
+          
+          className="w-full sm:w-auto px-4 sm:px-6 py-2 bg-gray-400 rounded-lg text-white font-semibold">
             Back
           </button>
 

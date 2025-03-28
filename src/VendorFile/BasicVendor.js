@@ -213,6 +213,23 @@ function BasicVendor() {
         setActiveTab(id);
     };
 
+
+    const handleNextBank = (value) => {
+        console.log("value", value)
+        setActiveTab(value);
+
+
+    }
+
+    const handleBackBasic = (value) => {
+        setActiveTab(value);
+    }
+
+    const handleBackAddress = (value) =>{
+setActiveTab(value)
+    }
+
+
     return (
         <div className="bg-blueGray-100  w-full">
             <div className="p-2 sm:p-2 md:p-2 lg:p-4">
@@ -422,95 +439,101 @@ function BasicVendor() {
 
 
                                 </div>
-                           
 
-                            <div className="pt-4">
 
-                                {additionalContacts.map((contact, index) => (
-                                    <div key={contact.id} className="mt-4 p-4 ">
-                                        <h2 className="text-xl font-semibold mb-2 text-black">
-                                            Additional Contact {index + 1}
-                                        </h2>
-                                        <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
-                                            <div>
-                                                <label className="block mb-2 text-neutral-800 font-medium">
-                                                    Contact Person Name<span className="text-red-500">*</span>
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={contact.name}
-                                                    onChange={(e) => handleAdditionalContactChange(index, "name", e.target.value)}
-                                                    placeholder="Enter Contact Person Name"
-                                                    className="px-3 py-3 w-full border rounded-xl focus:outline-none"
-                                                />
-                                                {formErrors[`additionalName${index}`] && (
-                                                    <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
-                                                        <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalName${index}`]} </p>
-                                                )}
-                                            </div>
+                                <div className="pt-4">
 
-                                            <div>
-                                                <label className="block mb-2 text-neutral-800 font-medium">
-                                                    Contact Number <span className="text-red-500">*</span>
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={contact.contactNumber}
-                                                    onChange={(e) => handleAdditionalContactChange(index, "contactNumber", e.target.value)}
-                                                    placeholder="Enter Contact Number"
-                                                    className="px-3 py-3 w-full border rounded-xl focus:outline-none"
-                                                />
-                                                {formErrors[`additionalContactNumber${index}`] && (
-                                                    <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
-                                                        <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalContactNumber${index}`]} </p>
-                                                )}
-                                            </div>
-                                            <div>
-                                                <label className="block mb-2 text-neutral-800 font-medium">
-                                                    Email ID <span className="text-red-500">*</span>
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={contact.email}
-                                                    onChange={(e) => handleAdditionalContactChange(index, "email", e.target.value)}
-                                                    placeholder="Enter Email ID"
-                                                    className="px-3 py-3 w-full border rounded-xl focus:outline-none"
-                                                />
-                                                {formErrors[`additionalEmail${index}`] && (
-                                                    <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
-                                                        <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalEmail${index}`]} </p>
-                                                )}
-                                            </div>
-                                            <div>
-                                                <label className="block mb-2 text-neutral-800 font-medium">
-                                                    Designation<span className='text-red-500'>*</span>
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    value={contact.designation}
-                                                    onChange={(e) => handleAdditionalContactChange(index, "designation", e.target.value)}
-                                                    placeholder="Enter Designation"
-                                                    className="px-3 py-3 w-full border rounded-xl focus:outline-none"
-                                                />
-                                                {formErrors[`additionalDesignation${index}`] && (
-                                                    <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
-                                                        <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalDesignation${index}`]} </p>
-                                                )}
+                                    {additionalContacts.map((contact, index) => (
+                                        <div key={contact.id} className="mt-4 p-4 ">
+                                            <h2 className="text-xl font-semibold mb-2 text-black">
+                                                Additional Contact {index + 1}
+                                            </h2>
+                                            <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-3">
+                                                <div>
+                                                    <label className="block mb-2 text-neutral-800 font-medium">
+                                                        Contact Person Name<span className="text-red-500">*</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={contact.name}
+                                                        onChange={(e) => handleAdditionalContactChange(index, "name", e.target.value)}
+                                                        placeholder="Enter Contact Person Name"
+                                                        className="px-3 py-3 w-full border rounded-xl focus:outline-none"
+                                                    />
+                                                    {formErrors[`additionalName${index}`] && (
+                                                        <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
+                                                            <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalName${index}`]} </p>
+                                                    )}
+                                                </div>
+
+                                                <div>
+                                                    <label className="block mb-2 text-neutral-800 font-medium">
+                                                        Contact Number <span className="text-red-500">*</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={contact.contactNumber}
+                                                        onChange={(e) => handleAdditionalContactChange(index, "contactNumber", e.target.value)}
+                                                        placeholder="Enter Contact Number"
+                                                        className="px-3 py-3 w-full border rounded-xl focus:outline-none"
+                                                    />
+                                                    {formErrors[`additionalContactNumber${index}`] && (
+                                                        <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
+                                                            <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalContactNumber${index}`]} </p>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    <label className="block mb-2 text-neutral-800 font-medium">
+                                                        Email ID <span className="text-red-500">*</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={contact.email}
+                                                        onChange={(e) => handleAdditionalContactChange(index, "email", e.target.value)}
+                                                        placeholder="Enter Email ID"
+                                                        className="px-3 py-3 w-full border rounded-xl focus:outline-none"
+                                                    />
+                                                    {formErrors[`additionalEmail${index}`] && (
+                                                        <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
+                                                            <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalEmail${index}`]} </p>
+                                                    )}
+                                                </div>
+                                                <div>
+                                                    <label className="block mb-2 text-neutral-800 font-medium">
+                                                        Designation<span className='text-red-500'>*</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={contact.designation}
+                                                        onChange={(e) => handleAdditionalContactChange(index, "designation", e.target.value)}
+                                                        placeholder="Enter Designation"
+                                                        className="px-3 py-3 w-full border rounded-xl focus:outline-none"
+                                                    />
+                                                    {formErrors[`additionalDesignation${index}`] && (
+                                                        <p className="text-red-600 font-Gilroy font-medium text-sm flex items-center gap-1 pt-2">
+                                                            <span><InfoCircle size="14" color="#DC2626" /></span> {formErrors[`additionalDesignation${index}`]} </p>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+
+                                    {additionalContacts.length < 2 && (
+                                        <div className="mt-4">
+                                            <button
+                                                onClick={addContact}
+                                                className="rounded-lg text-blue-800 font-semibold text-md cursor-pointer font-Gilroy"
+                                            >
+                                                + Add Additional Contact {additionalContacts.length + 1}
+                                            </button>
+                                        </div>
 
 
-                                <div className="mt-4">
-                                    <button
-                                        onClick={addContact}
-                                        className="rounded-lg text-blue-800 font-semibold text-md cursor-pointer"
-                                    >
-                                        + Add Additional Contact
-                                    </button>
+
+                                    )}
                                 </div>
-                            </div>
+
+
                             </div>
                             <div className="flex flex-col xs:flex-row sm:flex-row justify-end gap-2 sm:gap-4">
                                 <button
@@ -531,8 +554,8 @@ function BasicVendor() {
 
 
                         </div>}
-                    {activeTab === 2 && <div> <AddressVendor /></div>}
-                    {activeTab === 3 && <div><BankVendor /></div>}
+                    {activeTab === 2 && <div> <AddressVendor handleNext={handleNextBank} handleBack={handleBackBasic} /></div>}
+                    {activeTab === 3 && <div><BankVendor handleBackAddress={handleBackAddress} /></div>}
                 </div>
             </div>
         </div>
