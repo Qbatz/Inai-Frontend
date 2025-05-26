@@ -19,6 +19,7 @@ function Activities() {
     const totalPages = Math.ceil(activitiesList.length / itemsPerPage);
 
 
+    
     const handleItemsPerPageChange = (e) => {
         setItemsPerPage(Number(e.target.value));
         setCurrentPage(1);
@@ -58,7 +59,7 @@ function Activities() {
 
     useEffect(() => {
         if (state.Common.successCode === 200) {
-            setActivitiesList(state.userInfo.activitiesList)
+            setActivitiesList(state.userInfo?.activitiesList)
             setLoading(false)
             setTimeout(() => {
                 dispatch({ type: RESET_CODE })
@@ -67,7 +68,11 @@ function Activities() {
         }
     }, [state.Common.successCode])
 
-
+    useEffect(() => {
+        if (state.userInfo?.activitiesList) {
+            setActivitiesList(state.userInfo?.activitiesList)
+        }
+    }, [state.userInfo?.activitiesList])
 
     useEffect(() => {
         if (state.Common?.code === 400 || state.Common?.code === 401 || state.Common?.code === 402) {
@@ -146,7 +151,7 @@ function Activities() {
             </div>
 
             {activitiesList.length > 10 && (
-               
+
                 <nav className="absolute right-4 bottom-0  flex flex-col xs:flex-row sm:flex-row md:flex-row justify-end items-center mt-4 bg-white p-4 rounded-lg">
                     <div className="flex items-center gap-2">
                         <select
