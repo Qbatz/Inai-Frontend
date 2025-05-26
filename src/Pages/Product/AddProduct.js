@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from "moment";
 import { useLocation, useNavigate } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import PdfImage from '../../Asset/Images/pdf.png';
+import PdfImage from '../../Asset/Images/pdfImage.png'
 import Select from "react-select";
 import CreatableSelect from 'react-select/creatable';
 import WordIcon from '../../Asset/Images/doc.png';
@@ -1893,8 +1893,8 @@ function AddProduct() {
                                                                     className="w-full h-full object-cover"
                                                                 />
                                                             ) : isPdf ? (
-                                                                <div className="flex flex-col items-center justify-center text-center px-2">
-                                                                    <img src={PdfImage} alt="PDF" className="w-full h-full object-cover" />
+                                                                <div className="flex flex-col items-center justify-center text-center px-2 w-full h-full bg-zinc-100">
+                                                                    <img src={PdfImage} alt="PDF" className="w-12 h-12 object-contain" />
                                                                     <p className="text-xs text-zinc-700 truncate w-full">{img.name}</p>
                                                                 </div>
                                                             )
@@ -2107,7 +2107,7 @@ function AddProduct() {
                                     ]}
                                     styles={customSelectStyles}
                                     className="capitalize font-Gilroy font-medium text-sm text-neutral-600"
-                                    isSearchable={false}
+                                    isSearchable={true}
                                     placeholder="Select Unit of measurement"
                                 />
 
