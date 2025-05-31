@@ -22,7 +22,7 @@ import { Chart2, LoginCurve, Setting2, I24Support, Receipt1, Receipt2 } from "ic
 import { useDispatch, connect } from 'react-redux';
 import { LOG_OUT } from "../Utils/Constant";
 import { encryptData } from "../Crypto/crypto";
-import { Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate, useLocation } from "react-router-dom";
 import AddCustomer from "../Pages/CustomerComponent/AddCustomer";
 import AddVendor from "../Pages/VendorFile/AddVendor";
 import VendorDetails from "../Pages/VendorFile/VendorDetails";
@@ -35,13 +35,12 @@ import AddInvoice from "../Pages/Invoice/AddInvoice";
 import InvoiceDetails from "../Pages/Invoice/InvoiceDetails";
 
 
-
 function Sidebar({ state }) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const [activeItem, setActiveItem] = useState("dashboard");
+    const location = useLocation();
+    const [activeItem, setActiveItem] = useState("");
 
     const [isLogout, setIsLogout] = useState(false)
 
@@ -54,7 +53,7 @@ function Sidebar({ state }) {
         dispatch({ type: LOG_OUT });
         const encryptDataLogin = encryptData(JSON.stringify(false));
         localStorage.setItem("inai_login", encryptDataLogin.toString());
-       localStorage.setItem("isLoginSuccess", JSON.stringify(false));
+        localStorage.setItem("isLoginSuccess", JSON.stringify(false));
         navigate("/")
         setIsLogout(false)
     }
@@ -84,22 +83,54 @@ function Sidebar({ state }) {
 
 
 
-    useEffect(() => {
-        const path = window.location.pathname;
-        if (path === "/product") {
-            setActiveItem("product");
 
-        } else if (path === "/vendor") {
-            setActiveItem("vendor");
-        } else if (path === "/client") {
-            setActiveItem("client");
-        } else if (path === "/") {
-            setActiveItem("dashboard");
-        } else if (path === "/invoice") {
-            setActiveItem("invoice");
+
+
+
+    useEffect(() => {
+        const path = location.pathname;
+        let page = "";
+
+        switch (path) {
+            case "/product":
+                page = "product";
+                break;
+            case "/vendor":
+                page = "vendor";
+                break;
+            case "/client":
+                page = "client";
+                break;
+            case "/invoice":
+                page = "invoice";
+                break;
+            case "/":
+                page = "dashboard";
+                break;
+            default:
+                page = "";
         }
 
-    }, [window.location.pathname]);
+        if (page) {
+            setActiveItem(page);
+            localStorage.setItem("lastActiveItem", JSON.stringify({ page, path }));
+
+
+            console.log("sidebar path", path)
+
+        } else {
+            setActiveItem("");
+            localStorage.removeItem("lastActiveItem");
+        }
+    }, [location.pathname]);
+
+
+
+
+
+
+
+
 
 
 
@@ -260,7 +291,7 @@ function Sidebar({ state }) {
                 <div className="flex flex-1">
                     <Routes>
                         <Route path="/:type/:token" element={<Dashboard />} />
-                        <Route path="/" element={<Dashboard />} />
+
                         <Route path="/client" element={<CustomerList />} />
                         <Route path="/vendor" element={<Vendor />} />
                         <Route path="/product" element={<ProductList />} />
@@ -274,12 +305,15 @@ function Sidebar({ state }) {
                         <Route path="/invoice" element={<InvoiceList />} />
                         <Route path="/add-invoice" element={<AddInvoice />} />
                         <Route path="/invoice-details/:invoiceId" element={<InvoiceDetails />} />
+
+
+
+
+                        <Route path="/" element={<Dashboard />} />
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
 
                 </div>
-
-
 
 
 
@@ -325,7 +359,7 @@ function Sidebar({ state }) {
 }
 
 const mapsToProps = (stateInfo) => {
-  
+
     return {
         state: stateInfo.userInfo?.userDetails,
     };

@@ -1,7 +1,7 @@
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_USER_INFO_SAGA, LOG_IN } from '../../Utils/Constant';
@@ -12,12 +12,21 @@ import { encryptData } from '../../Crypto/crypto';
 function Dashboard() {
 
 
-  const { type, token } = useParams();
+ const { type, token } = useParams();
+
+console.log("type:", type);   
+console.log("token:", token); 
+ 
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector(state => state)
   const cookies = new Cookies();
+
+
+  
+
 
 
   useEffect(() => {
@@ -26,14 +35,16 @@ function Dashboard() {
     }
   }, [token]);
 
+  
+
 
 
   useEffect(() => {
     dispatch({ type: GET_USER_INFO_SAGA });
-     }, []);
+  }, []);
 
   useEffect(() => {
-    if (state.Common.successCode === 200 && type) {
+    if (state.Common.successCode === 200 && type && token) {
       setTimeout(() => {
         switch (type) {
           case "customer":
@@ -49,12 +60,41 @@ function Dashboard() {
             break;
         }
       }, 0);
+    
     }
-  }, [state.Common.successCode, type]);
+  }, [state.Common.successCode, type, token]);
 
 
-const value = localStorage.getItem("isLoginSuccess");
-const isLogin = value !== null ? JSON.parse(value) : false;
+
+useEffect(()=>{
+  if(!token){
+      switch (type) {
+        case "client":
+          navigate("/client");
+          break;
+        case "vendor":
+          navigate("/vendor");
+          break;
+        case "product":
+          navigate("/product");
+          break;
+        case "invoice":
+          navigate("/invoice");
+          break;
+        default:
+          navigate("/");
+          break;
+      }
+    }
+},[type])
+
+
+
+
+
+  console.log("type", type)
+  const value = localStorage.getItem("isLoginSuccess");
+  const isLogin = value !== null ? JSON.parse(value) : false;
 
 
 
@@ -89,11 +129,11 @@ const isLogin = value !== null ? JSON.parse(value) : false;
 
 
 
- 
 
 
 
- 
+
+
 
   return (
     <div className='bg-slate-100  h-screen w-full p-4 rounded-tl-lg rounded-tr-lg   m-0 '>
