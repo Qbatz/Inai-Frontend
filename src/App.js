@@ -73,6 +73,7 @@ function App({ isLogged_In}) {
   }, []);
 
 if (isLogged_In === null || successLogin === null) return<label>Loading...</label>
+
   return (
     <div>
       <ToastContainer position="bottom-center"
