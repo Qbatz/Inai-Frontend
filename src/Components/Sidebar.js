@@ -33,7 +33,8 @@ import ProductDetails from "../Pages/Product/ProductDetails";
 import InvoiceList from "../Pages/Invoice/InvoiceList";
 import AddInvoice from "../Pages/Invoice/AddInvoice";
 import InvoiceDetails from "../Pages/Invoice/InvoiceDetails";
-
+import { jwtDecode } from "jwt-decode";
+import Cookies from 'universal-cookie';
 
 
 function Sidebar({ state }) {
@@ -54,7 +55,7 @@ function Sidebar({ state }) {
         dispatch({ type: LOG_OUT });
         const encryptDataLogin = encryptData(JSON.stringify(false));
         localStorage.setItem("inai_login", encryptDataLogin.toString());
-       localStorage.setItem("isLoginSuccess", JSON.stringify(false));
+        localStorage.setItem("isLoginSuccess", JSON.stringify(false));
         navigate("/")
         setIsLogout(false)
     }
@@ -102,6 +103,33 @@ function Sidebar({ state }) {
     }, [window.location.pathname]);
 
 
+    const checkTokenExpired = () => {
+        const cookies = new Cookies();
+        const token = cookies.get('inai-token');
+
+        if (!token) return true;
+
+        try {
+            const decoded = jwtDecode(token);
+            const expiry = decoded.exp * 1000;
+            const now = Date.now();
+            return expiry < now;
+        } catch (error) {
+            return true;
+        }
+    };
+
+    useEffect(() => {
+        if (checkTokenExpired()) {
+            dispatch({ type: LOG_OUT });
+
+            const encryptDataLogin = encryptData(JSON.stringify(false));
+            localStorage.setItem("inai_login", encryptDataLogin.toString());
+            localStorage.setItem("isLoginSuccess", JSON.stringify(false));
+
+            navigate("/");
+        }
+    }, []);
 
     return (
         <div className="grid grid-cols-[auto_1fr] h-screen overflow-hidden">
@@ -325,7 +353,7 @@ function Sidebar({ state }) {
 }
 
 const mapsToProps = (stateInfo) => {
-  
+
     return {
         state: stateInfo.userInfo?.userDetails,
     };
