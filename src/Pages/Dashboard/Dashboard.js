@@ -30,7 +30,7 @@ function Dashboard() {
 
   useEffect(() => {
     dispatch({ type: GET_USER_INFO_SAGA });
-     }, []);
+  }, []);
 
   useEffect(() => {
     if (state.Common.successCode === 200 && type) {
@@ -45,6 +45,15 @@ function Dashboard() {
           case "invoice":
             navigate("/invoice");
             break;
+          case "po":
+            navigate("/po");
+            break;
+          case "e-rfq":
+            navigate("/e-rfq");
+            break;
+          case "e-quote":
+            navigate("/e-quote");
+            break;
           default:
             break;
         }
@@ -53,8 +62,8 @@ function Dashboard() {
   }, [state.Common.successCode, type]);
 
 
-const value = localStorage.getItem("isLoginSuccess");
-const isLogin = value !== null ? JSON.parse(value) : false;
+  const value = localStorage.getItem("isLoginSuccess");
+  const isLogin = value !== null ? JSON.parse(value) : false;
 
 
 
@@ -77,8 +86,16 @@ const isLogin = value !== null ? JSON.parse(value) : false;
             case "invoice":
               navigate("/invoice");
               break;
+            case "po":
+              navigate("/po");
+              break;
+            case "e-rfq":
+              navigate("/e-rfq");
+              break;
+            case "e-quote":
+              navigate("/e-quote");
+              break;
             default:
-
               break;
           }
         }
@@ -89,11 +106,7 @@ const isLogin = value !== null ? JSON.parse(value) : false;
 
 
 
- 
 
-
-
- 
 
   return (
     <div className='bg-slate-100  h-screen w-full p-4 rounded-tl-lg rounded-tr-lg   m-0 '>

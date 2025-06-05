@@ -33,6 +33,9 @@ import ProductDetails from "../Pages/Product/ProductDetails";
 import InvoiceList from "../Pages/Invoice/InvoiceList";
 import AddInvoice from "../Pages/Invoice/AddInvoice";
 import InvoiceDetails from "../Pages/Invoice/InvoiceDetails";
+import PoList from "../Pages/PO/PoList";
+import RfqList from "../Pages/E-Rfq/RfqList"
+import QuoteList from '../Pages/E-Quote/QuoteList'
 
 
 
@@ -54,7 +57,7 @@ function Sidebar({ state }) {
         dispatch({ type: LOG_OUT });
         const encryptDataLogin = encryptData(JSON.stringify(false));
         localStorage.setItem("inai_login", encryptDataLogin.toString());
-       localStorage.setItem("isLoginSuccess", JSON.stringify(false));
+        localStorage.setItem("isLoginSuccess", JSON.stringify(false));
         navigate("/")
         setIsLogout(false)
     }
@@ -97,9 +100,16 @@ function Sidebar({ state }) {
             setActiveItem("dashboard");
         } else if (path === "/invoice") {
             setActiveItem("invoice");
+        } else if (path === "/po") {
+            setActiveItem("po");
+        } else if (path === "/e-rfq") {
+            setActiveItem("e-rfq");
+        } else if (path === "/e-quote") {
+            setActiveItem("e-quote");
         }
 
     }, [window.location.pathname]);
+
 
 
 
@@ -183,6 +193,32 @@ function Sidebar({ state }) {
                             <Receipt2 size={activeItem === "ewaybill" ? "22" : "22"} color={activeItem === "ewaybill" ? "#205DA8" : "#0F172A"} />
                             <span className="hidden lg:inline">E-WayBill</span>
                         </li>
+
+                        <li
+                            className={`grid grid-cols-[auto_1fr] items-center gap-3 font-Gilroy font-semibold text-base p-2 cursor-pointer ${activeItem === "po" ? "text-[#205DA8]" : "text-black"
+                                }`}
+                            onClick={() => handleNavigation('po', '/po')}
+                        >
+                            <Receipt2 size={activeItem === "po" ? "22" : "22"} color={activeItem === "po" ? "#205DA8" : "#0F172A"} />
+                            <span className="hidden lg:inline">PO</span>
+                        </li>
+                        <li
+                            className={`grid grid-cols-[auto_1fr] items-center gap-3 font-Gilroy font-semibold text-base p-2 cursor-pointer ${activeItem === "e-rfq" ? "text-[#205DA8]" : "text-black"
+                                }`}
+                            onClick={() => handleNavigation('e-rfq', '/e-rfq')}
+                        >
+                            <Receipt2 size={activeItem === "e-rfq" ? "22" : "22"} color={activeItem === "e-rfq" ? "#205DA8" : "#0F172A"} />
+                            <span className="hidden lg:inline">E-RFQ</span>
+                        </li>
+                        <li
+                            className={`grid grid-cols-[auto_1fr] items-center gap-3 font-Gilroy font-semibold text-base p-2 cursor-pointer ${activeItem === "e-quote" ? "text-[#205DA8]" : "text-black"
+                                }`}
+                            onClick={() => handleNavigation('e-quote', '/e-quote')}
+                        >
+                            <Receipt2 size={activeItem === "e-quote" ? "22" : "22"} color={activeItem === "e-quote" ? "#205DA8" : "#0F172A"} />
+                            <span className="hidden lg:inline">E-QUOTE</span>
+                        </li>
+
                     </ul>
 
 
@@ -273,6 +309,11 @@ function Sidebar({ state }) {
                         <Route path="/product-details/:productId" element={<ProductDetails />} />
                         <Route path="/invoice" element={<InvoiceList />} />
                         <Route path="/add-invoice" element={<AddInvoice />} />
+
+                        <Route path="/e-quote" element={<QuoteList />} />
+                        <Route path="/e-rfq" element={<RfqList />} />
+                        <Route path="/po" element={<PoList />} />
+
                         <Route path="/invoice-details/:invoiceId" element={<InvoiceDetails />} />
                         <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
@@ -325,7 +366,7 @@ function Sidebar({ state }) {
 }
 
 const mapsToProps = (stateInfo) => {
-  
+
     return {
         state: stateInfo.userInfo?.userDetails,
     };
