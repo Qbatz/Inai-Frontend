@@ -33,7 +33,6 @@ import ProductDetails from "../Pages/Product/ProductDetails";
 import InvoiceList from "../Pages/Invoice/InvoiceList";
 import AddInvoice from "../Pages/Invoice/AddInvoice";
 import InvoiceDetails from "../Pages/Invoice/InvoiceDetails";
-import { jwtDecode } from "jwt-decode";
 import Cookies from 'universal-cookie';
 
 
@@ -106,17 +105,8 @@ function Sidebar({ state }) {
     const checkTokenExpired = () => {
         const cookies = new Cookies();
         const token = cookies.get('inai-token');
-
         if (!token) return true;
 
-        try {
-            const decoded = jwtDecode(token);
-            const expiry = decoded.exp * 1000;
-            const now = Date.now();
-            return expiry < now;
-        } catch (error) {
-            return true;
-        }
     };
 
     useEffect(() => {
