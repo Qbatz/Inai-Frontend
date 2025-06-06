@@ -102,12 +102,20 @@ function Sidebar({ state }) {
     }, [window.location.pathname]);
 
 
-    const checkTokenExpired = () => {
-        const cookies = new Cookies();
-        const token = cookies.get('inai-token');
-        if (!token) return true;
+   const checkTokenExpired = () => {
+    const cookies = new Cookies();
+    const token = cookies.get('inai-token');
 
-    };
+    console.log("token",token)
+    
+    if (!token?.trim()) {
+        return true; 
+    }
+
+    
+    return false; 
+};
+
 
     useEffect(() => {
         if (checkTokenExpired()) {
