@@ -108,10 +108,11 @@ function Sidebar({ state }) {
 
     console.log("token",token)
     
-    if (!token || token.trim() === '') {
+    if (!token?.trim()) {
         return true; 
     }
 
+    
     return false; 
 };
 
